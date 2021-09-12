@@ -28,3 +28,22 @@ class AgeCalculator:
         self.data['Difference']['Months'] = self.data['Difference']['DifferenceData'].months
         self.data['Difference']['Days'] = self.data['Difference']['DifferenceData'].days
 
+    def calculate_futurebirthdate(self, year):
+        future_birth_date = 'Next_Birth_Date_'+str(year)
+        self.data[future_birth_date] = {}
+        self.data[future_birth_date]['Date'] = self.data['Birth_Date']['Date'] + relativedelta.relativedelta(years=int(self.data['Difference']['Years'] + year))
+        self.data[future_birth_date]['DateStr'] = str(self.data[future_birth_date]['Date'].strftime("%d-%m-%Y"))
+        self.data[future_birth_date]['DifferenceData'] = relativedelta.relativedelta(
+            self.data[future_birth_date]['Date'],
+            self.data['Current_Date']['Date'])
+        self.data[future_birth_date]['Rem_Years'] = self.data[future_birth_date]['DifferenceData'].years
+        self.data[future_birth_date]['Rem_Months'] = self.data[future_birth_date]['DifferenceData'].months
+        self.data[future_birth_date]['Rem_Days'] = self.data[future_birth_date]['DifferenceData'].days
+        self.data[future_birth_date]['Day'] = calendar.day_name[self.data[future_birth_date]['Date'].weekday()]
+
+    def calculate_futurebirthdates(self, years):
+        for i in range(1,years):
+            self.calculate_futurebirthdate(i)
+
+
+
